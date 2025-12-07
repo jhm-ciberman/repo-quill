@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A4467C24-1F10-4902-BC03-5CD66AAE4F4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoQuill.Core", "src\RepoQuill.Core\RepoQuill.Core.csproj", "{7BD621F7-1A9F-4F5E-B6AE-58B91C155CE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoQuill.Cli", "src\RepoQuill.Cli\RepoQuill.Cli.csproj", "{54A7BBEC-F0BF-48B2-A3C8-C3091128F660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoQuill.Gui", "src\RepoQuill.Gui\RepoQuill.Gui.csproj", "{15647849-9392-4D47-9CAF-9ED668F2D770}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DF93C6FA-ED36-48C9-B147-204E1B3B929A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoQuill.Core.Tests", "tests\RepoQuill.Core.Tests\RepoQuill.Core.Tests.csproj", "{3365D0A3-E2FA-4B7F-BFA1-31A32FF06AA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BD621F7-1A9F-4F5E-B6AE-58B91C155CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BD621F7-1A9F-4F5E-B6AE-58B91C155CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BD621F7-1A9F-4F5E-B6AE-58B91C155CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD621F7-1A9F-4F5E-B6AE-58B91C155CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54A7BBEC-F0BF-48B2-A3C8-C3091128F660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54A7BBEC-F0BF-48B2-A3C8-C3091128F660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54A7BBEC-F0BF-48B2-A3C8-C3091128F660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54A7BBEC-F0BF-48B2-A3C8-C3091128F660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15647849-9392-4D47-9CAF-9ED668F2D770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15647849-9392-4D47-9CAF-9ED668F2D770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15647849-9392-4D47-9CAF-9ED668F2D770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15647849-9392-4D47-9CAF-9ED668F2D770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3365D0A3-E2FA-4B7F-BFA1-31A32FF06AA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3365D0A3-E2FA-4B7F-BFA1-31A32FF06AA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3365D0A3-E2FA-4B7F-BFA1-31A32FF06AA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3365D0A3-E2FA-4B7F-BFA1-31A32FF06AA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7BD621F7-1A9F-4F5E-B6AE-58B91C155CE6} = {A4467C24-1F10-4902-BC03-5CD66AAE4F4E}
+		{54A7BBEC-F0BF-48B2-A3C8-C3091128F660} = {A4467C24-1F10-4902-BC03-5CD66AAE4F4E}
+		{15647849-9392-4D47-9CAF-9ED668F2D770} = {A4467C24-1F10-4902-BC03-5CD66AAE4F4E}
+		{3365D0A3-E2FA-4B7F-BFA1-31A32FF06AA3} = {DF93C6FA-ED36-48C9-B147-204E1B3B929A}
+	EndGlobalSection
+EndGlobal
