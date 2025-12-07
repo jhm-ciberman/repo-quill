@@ -1,4 +1,4 @@
-﻿namespace RepoQuill.Gui.ViewModels;
+namespace RepoQuill.Gui.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
