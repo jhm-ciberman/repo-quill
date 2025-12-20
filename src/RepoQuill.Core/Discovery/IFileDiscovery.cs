@@ -15,7 +15,7 @@ public interface IFileDiscovery
     /// <param name="honorGitIgnore">Whether to respect .gitignore files.</param>
     /// <param name="ct">Cancellation token.</param>
     /// <returns>An async enumerable of discovered file entries.</returns>
-    IAsyncEnumerable<FileEntry> DiscoverAsync(
+    public IAsyncEnumerable<FileEntry> DiscoverAsync(
         string rootPath,
         bool honorGitIgnore,
         CancellationToken ct = default);

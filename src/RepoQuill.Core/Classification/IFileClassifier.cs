@@ -13,5 +13,5 @@ public interface IFileClassifier
     /// <param name="entry">The file entry to classify.</param>
     /// <param name="config">The configuration with patterns.</param>
     /// <returns>A new FileEntry with the appropriate State set.</returns>
-    FileEntry Classify(FileEntry entry, QuillConfig config);
+    public FileEntry Classify(FileEntry entry, QuillConfig config);
 }

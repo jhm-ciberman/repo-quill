@@ -13,7 +13,7 @@ public interface IContentLoader
     /// <param name="entry">The file entry to load.</param>
     /// <param name="ct">Cancellation token.</param>
     /// <returns>A result containing the file content or an error.</returns>
-    Task<Result<FileContent>> LoadAsync(FileEntry entry, CancellationToken ct = default);
+    public Task<Result<FileContent>> LoadAsync(FileEntry entry, CancellationToken ct = default);
 }
 
 /// <summary>

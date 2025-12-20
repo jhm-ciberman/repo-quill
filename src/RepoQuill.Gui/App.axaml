@@ -2,13 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="RepoQuill.Gui.App"
              xmlns:local="using:RepoQuill.Gui"
+             xmlns:conv="using:RepoQuill.Gui.Converters"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-  
+
+    <Application.Resources>
+        <conv:BytesToSizeConverter x:Key="BytesToSizeConverter"/>
+        <conv:FileStateToCheckConverter x:Key="FileStateToCheckConverter"/>
+    </Application.Resources>
+
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>

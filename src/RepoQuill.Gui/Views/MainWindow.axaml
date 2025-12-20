@@ -1,20 +1,196 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:RepoQuill.Gui.ViewModels"
+        xmlns:v="using:RepoQuill.Gui.Views"
+        xmlns:m="using:RepoQuill.Gui.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="RepoQuill.Gui.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="RepoQuill.Gui">
+        Title="RepoQuill"
+        MinWidth="600"
+        MinHeight="400"
+        Width="900"
+        Height="600"
+        x:Name="MainWindowRoot">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveToFileCommand}" CommandParameter="{Binding #MainWindowRoot}"/>
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenFolderCommand}" CommandParameter="{Binding #MainWindowRoot}"/>
+        <KeyBinding Gesture="Escape" Command="{Binding CancelCommand}"/>
+    </Window.KeyBindings>
 
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Initial state: Open Folder button with dropdown -->
+        <Grid Grid.Row="0" Grid.RowSpan="3"
+              IsVisible="{Binding !HasFolder}"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <StackPanel Spacing="16" HorizontalAlignment="Center">
+                <TextBlock Text="RepoQuill"
+                           FontSize="28"
+                           FontWeight="Light"
+                           HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Select a folder to get started"
+                           Foreground="Gray"
+                           HorizontalAlignment="Center"/>
+
+                <SplitButton Content="Open Folder"
+                             Command="{Binding OpenFolderCommand}"
+                             CommandParameter="{Binding #MainWindowRoot}"
+                             HorizontalAlignment="Center"
+                             MinWidth="160">
+                    <SplitButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuItem Header="Recent Folders" IsEnabled="False"/>
+                            <Separator/>
+                            <ItemsControl ItemsSource="{Binding RecentFolders}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="m:RecentFolder">
+                                        <MenuItem Header="{Binding Path}"
+                                                  Command="{Binding ((vm:MainWindowViewModel)DataContext).OpenRecentFolderCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                  CommandParameter="{Binding}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </MenuFlyout>
+                    </SplitButton.Flyout>
+                </SplitButton>
+            </StackPanel>
+        </Grid>
+
+        <!-- Main content after folder selected -->
+        <Grid Grid.Row="0" Grid.RowSpan="3"
+              IsVisible="{Binding HasFolder}"
+              RowDefinitions="Auto,*,Auto">
+
+            <!-- Header bar -->
+            <Border Grid.Row="0"
+                    Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                    Padding="8">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <SplitButton Content="Open Folder"
+                                     Command="{Binding OpenFolderCommand}"
+                                     CommandParameter="{Binding #MainWindowRoot}">
+                            <SplitButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuItem Header="Recent Folders" IsEnabled="False"/>
+                                    <Separator/>
+                                    <ItemsControl ItemsSource="{Binding RecentFolders}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="m:RecentFolder">
+                                                <MenuItem Header="{Binding Path}"
+                                                          Command="{Binding ((vm:MainWindowViewModel)DataContext).OpenRecentFolderCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                          CommandParameter="{Binding}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
+
+                        <TextBlock Text="{Binding RootPath}"
+                                   VerticalAlignment="Center"
+                                   Foreground="Gray"
+                                   TextTrimming="CharacterEllipsis"
+                                   MaxWidth="400"/>
+                    </StackPanel>
+
+                    <!-- Cancel button when busy -->
+                    <Button Grid.Column="1"
+                            Content="Cancel"
+                            Command="{Binding CancelCommand}"
+                            IsVisible="{Binding IsBusy}"/>
+                </Grid>
+            </Border>
+
+            <!-- Split panel: Tree on left, Options on right -->
+            <Grid Grid.Row="1" ColumnDefinitions="*,Auto,250">
+
+                <!-- File tree -->
+                <Border Grid.Column="0"
+                        BorderBrush="{DynamicResource SystemControlForegroundBaseMediumLowBrush}"
+                        BorderThickness="0,0,1,0"
+                        Margin="0,0,0,0">
+                    <v:FileTreeView DataContext="{Binding RootNodes}"/>
+                </Border>
+
+                <!-- Resizer -->
+                <GridSplitter Grid.Column="1"
+                              Width="4"
+                              Background="Transparent"
+                              ResizeDirection="Columns"/>
+
+                <!-- Right panel: Options and actions -->
+                <Grid Grid.Column="2" RowDefinitions="*,Auto" Margin="0">
+
+                    <!-- Options -->
+                    <ScrollViewer Grid.Row="0" Padding="8">
+                        <v:OptionsPanel DataContext="{Binding Options}"/>
+                    </ScrollViewer>
+
+                    <!-- Action buttons -->
+                    <StackPanel Grid.Row="1"
+                                Spacing="8"
+                                Margin="16">
+                        <Button Content="Save to File"
+                                Command="{Binding SaveToFileCommand}"
+                                CommandParameter="{Binding #MainWindowRoot}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"/>
+
+                        <Button Content="Copy to Clipboard"
+                                Command="{Binding CopyToClipboardCommand}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Classes="accent"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <!-- Status bar -->
+            <Border Grid.Row="2"
+                    Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                    Padding="8,4">
+                <Grid ColumnDefinitions="*,Auto">
+                    <!-- Status message or progress -->
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <ProgressBar IsVisible="{Binding IsBusy}"
+                                     IsIndeterminate="{Binding !ProgressPercent}"
+                                     Value="{Binding ProgressPercent}"
+                                     Width="100"
+                                     MinHeight="4"/>
+
+                        <TextBlock IsVisible="{Binding IsBusy}"
+                                   Text="{Binding ProgressText}"
+                                   Foreground="Gray"
+                                   FontSize="11"
+                                   TextTrimming="CharacterEllipsis"
+                                   MaxWidth="400"/>
+
+                        <TextBlock IsVisible="{Binding !IsBusy}"
+                                   Text="{Binding StatusMessage}"
+                                   Foreground="Gray"
+                                   FontSize="11"/>
+                    </StackPanel>
+
+                    <!-- Error message -->
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding ErrorMessage}"
+                               Foreground="Red"
+                               FontSize="11"
+                               IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
 </Window>

@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:RepoQuill.Gui.ViewModels"
+             xmlns:conv="using:RepoQuill.Gui.Converters"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+             x:Class="RepoQuill.Gui.Views.FileTreeView">
+
+    <UserControl.Resources>
+        <conv:FileStateToCheckConverter x:Key="FileStateToCheckConverter"/>
+        <conv:BytesToSizeConverter x:Key="BytesToSizeConverter"/>
+    </UserControl.Resources>
+
+    <TreeView ItemsSource="{ReflectionBinding}"
+              AutoScrollToSelectedItem="True">
+        <TreeView.ItemTemplate>
+            <TreeDataTemplate ItemsSource="{Binding Children}" x:DataType="vm:FileTreeNodeViewModel">
+                <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto"
+                      Margin="0,1">
+
+                    <!-- Checkbox for selecting files -->
+                    <CheckBox Grid.Column="0"
+                              IsChecked="{Binding State, Converter={StaticResource FileStateToCheckConverter}, Mode=OneWay}"
+                              IsThreeState="True"
+                              Command="{Binding ToggleCheckCommand}"
+                              VerticalAlignment="Center"
+                              Margin="0,0,4,0"/>
+
+                    <!-- Folder/File icon -->
+                    <Panel Grid.Column="1" Margin="0,0,4,0">
+                        <TextBlock Text="&#128193;"
+                                   IsVisible="{Binding IsDirectory}"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"/>
+                        <TextBlock Text="&#128196;"
+                                   IsVisible="{Binding !IsDirectory}"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"/>
+                    </Panel>
+
+                    <!-- Name -->
+                    <TextBlock Grid.Column="2"
+                               Text="{Binding Name}"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <!-- TreeOnly indicator button -->
+                    <Button Grid.Column="3"
+                            Content="T"
+                            Command="{Binding CycleStateCommand}"
+                            IsVisible="{Binding IsTreeOnly}"
+                            ToolTip.Tip="Tree only - click to cycle state"
+                            FontSize="10"
+                            FontWeight="Bold"
+                            Padding="4,1"
+                            Margin="4,0"
+                            MinWidth="20"
+                            MinHeight="18"
+                            VerticalAlignment="Center"/>
+
+                    <!-- Size (for files only) -->
+                    <TextBlock Grid.Column="4"
+                               Text="{Binding SizeBytes, Converter={StaticResource BytesToSizeConverter}}"
+                               IsVisible="{Binding !IsDirectory}"
+                               Foreground="Gray"
+                               FontSize="11"
+                               VerticalAlignment="Center"
+                               Margin="8,0,0,0"/>
+                </Grid>
+            </TreeDataTemplate>
+        </TreeView.ItemTemplate>
+
+        <TreeView.Styles>
+            <Style Selector="TreeViewItem">
+                <Setter Property="IsExpanded" Value="{ReflectionBinding IsExpanded, Mode=TwoWay}"/>
+                <Setter Property="IsVisible" Value="{ReflectionBinding IsVisible}"/>
+            </Style>
+        </TreeView.Styles>
+    </TreeView>
+</UserControl>

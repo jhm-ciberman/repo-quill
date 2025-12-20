@@ -13,5 +13,5 @@ public interface IOutputFormatter
     /// <param name="allFiles">All files (Full and TreeOnly) for the tree section.</param>
     /// <param name="contents">Content of Full files.</param>
     /// <returns>The formatted output string.</returns>
-    string Format(IReadOnlyList<FileEntry> allFiles, IReadOnlyList<FileContent> contents);
+    public string Format(IReadOnlyList<FileEntry> allFiles, IReadOnlyList<FileContent> contents);
 }

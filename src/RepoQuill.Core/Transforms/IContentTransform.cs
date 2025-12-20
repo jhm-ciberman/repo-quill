@@ -12,5 +12,5 @@ public interface IContentTransform
     /// </summary>
     /// <param name="content">The file content to transform.</param>
     /// <returns>A new FileContent with transformed content.</returns>
-    FileContent Transform(FileContent content);
+    public FileContent Transform(FileContent content);
 }
