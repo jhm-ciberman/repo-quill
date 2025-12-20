@@ -51,11 +51,18 @@ public partial class MainWindowViewModel : ViewModelBase, IDisposable
         this.CopyToClipboardCommand = new AsyncRelayCommand(this.CopyToClipboardAsync, this.CanGenerate);
         this.CancelCommand = new RelayCommand(this.Cancel);
 
-        this.Options.PropertyChanged += (s, e) =>
+        this.Options.PropertyChanged += async (s, e) =>
         {
             if (e.PropertyName == nameof(OptionsViewModel.HideBinaries))
             {
                 this.UpdateNodeVisibility();
+            }
+            else if (e.PropertyName == nameof(OptionsViewModel.HonorGitIgnore))
+            {
+                if (!string.IsNullOrEmpty(this.RootPath))
+                {
+                    await this.LoadFolderAsync(this.RootPath);
+                }
             }
         };
     }
