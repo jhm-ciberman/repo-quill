@@ -38,11 +38,6 @@ public record QuillConfig
     public bool StripComments { get; init; } = false;
 
     /// <summary>
-    /// Whether to normalize whitespace in source files.
-    /// </summary>
-    public bool NormalizeWhitespace { get; init; } = false;
-
-    /// <summary>
     /// The output format to use.
     /// </summary>
     public OutputFormat Format { get; init; } = OutputFormat.PlainText;

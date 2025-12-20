@@ -15,7 +15,4 @@ public partial class OptionsViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool _stripComments;
-
-    [ObservableProperty]
-    private bool _normalizeWhitespace;
 }

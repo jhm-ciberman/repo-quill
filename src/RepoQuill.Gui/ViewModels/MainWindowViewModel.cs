@@ -402,7 +402,6 @@ public partial class MainWindowViewModel : ViewModelBase, IDisposable
             TreeOnlyPatterns = treeOnly,
             HonorGitIgnore = this.Options.HonorGitIgnore,
             StripComments = this.Options.StripComments,
-            NormalizeWhitespace = this.Options.NormalizeWhitespace,
             Format = OutputFormat.PlainText
         };
     }

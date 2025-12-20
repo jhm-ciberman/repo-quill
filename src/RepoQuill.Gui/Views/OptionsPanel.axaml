@@ -24,9 +24,5 @@
         <CheckBox IsChecked="{Binding StripComments}"
                   Content="Strip comments"
                   ToolTip.Tip="Remove comments from source files"/>
-
-        <CheckBox IsChecked="{Binding NormalizeWhitespace}"
-                  Content="Normalize whitespace"
-                  ToolTip.Tip="Normalize line endings and remove trailing whitespace"/>
     </StackPanel>
 </UserControl>

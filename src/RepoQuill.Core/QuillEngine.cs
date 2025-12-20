@@ -108,7 +108,7 @@ public sealed class QuillEngine
         }
 
         // Phase 4: Transformations
-        if (config.StripComments || config.NormalizeWhitespace)
+        if (config.StripComments)
         {
             ReportProgress(progress, ProgressPhase.Transforming, "", 0, contents.Count);
             var transforms = BuildTransforms(config);
@@ -151,9 +151,6 @@ public sealed class QuillEngine
 
         if (config.StripComments)
             transforms.Add(new CommentStripper());
-
-        if (config.NormalizeWhitespace)
-            transforms.Add(new WhitespaceNormalizer());
 
         return transforms;
     }
